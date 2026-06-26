@@ -1,0 +1,6158 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-Source Book Authoring Platform">
+      
+      
+      
+        <link rel="canonical" href="https://astrapi69.github.io/bibliogondocs/en/developers/plugins/">
+      
+      
+        <link rel="prev" href="../architecture/">
+      
+      
+        <link rel="next" href="../contributing/">
+      
+      
+        
+          <link rel="alternate" href="../../../developers/plugins/" hreflang="de">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Plugin Development - Bibliogon</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plugin-developer-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="Bibliogon" class="md-header__button md-logo" aria-label="Bibliogon" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bibliogon
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Plugin Development
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../developers/plugins/" hreflang="de" class="md-select__link">
+              Deutsch
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/astrapi69/bibliogon" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    astrapi69/bibliogon
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting-started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../dialog-to-pages/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Dialogs become pages
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../articles/" class="md-tabs__link">
+          
+  
+  
+  Articles
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../books/bulk-export/" class="md-tabs__link">
+          
+  
+  
+  Books
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../story-bible/" class="md-tabs__link">
+          
+  
+  
+  Story Bible
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../dashboard/pagination/" class="md-tabs__link">
+          
+  
+  
+  Dashboard
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../web-app/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Using Bibliogon as a Web App
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../offline-lan/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Offline mode and LAN access
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../editor/uebersicht/" class="md-tabs__link">
+          
+  
+  
+  Editor
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../export/browser/" class="md-tabs__link">
+          
+  
+  
+  Export
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../plugins/uebersicht/" class="md-tabs__link">
+          
+  
+  
+  Plugins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../templates/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Templates
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../import/github/" class="md-tabs__link">
+          
+  
+  
+  Import
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../installation/" class="md-tabs__link">
+          
+  
+  
+  Installation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../ai/" class="md-tabs__link">
+          
+  
+  
+  AI Assistant
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../themes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Themes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../shortcuts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Keyboard Shortcuts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../git-backup/basics/" class="md-tabs__link">
+          
+  
+  
+  Git Backup
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../support/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Support
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../faq/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  FAQ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../settings/sidebar/" class="md-tabs__link">
+          
+  
+  
+  Settings
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../architecture/" class="md-tabs__link">
+          
+  
+  
+  Developers
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="Bibliogon" class="md-nav__button md-logo" aria-label="Bibliogon" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bibliogon
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/astrapi69/bibliogon" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    astrapi69/bibliogon
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dialog-to-pages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogs become pages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Articles
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Articles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../articles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../articles/bulk-export/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bulk export
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../articles/medium-import/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Medium import
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../articles/convert-to-book/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convert to book
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../articles/content-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Content types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Books
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Books
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../books/bulk-export/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bulk export
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../books/repository-url/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git repository URL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../books/storyboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storyboard view
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../books/page-layouts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Page layouts (picture-book)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../books/text-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text configuration (picture-book)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../books/comic-bubbles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comic bubble types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../books/comic-panels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arranging comic panels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Bible
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Story Bible
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story-bible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story-bible/offline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story-bible/mentions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mentions and auto-detect
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story-bible/arc-view/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arc View and continuity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story-bible/relationship-graph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relationship graph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Dashboard
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dashboard/pagination/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pagination
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dashboard/trash-and-restore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trash and restore
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Bibliogon as a Web App
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../offline-lan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offline mode and LAN access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editor
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Editor
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/uebersicht/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/formatierung/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Formatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/display-settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Display settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/word-wrap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Word wrap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/title-editing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editing the title
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/writing-goals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing goals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/writing-history/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing history
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/outliner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outliner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/snapshots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Snapshots and versions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/chapter-status-labels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter status and labels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/composition-mode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Composition mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/context-menu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context menu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editor/sidebars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Collapsible sidebars
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Export
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Export
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../export/browser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    In the browser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../export/epub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EPUB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../export/pdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../export/audiobook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audiobook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plugins
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/uebersicht/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/ms-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manuscript Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Import
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Import
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../import/github/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../import/url/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From URL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../import/git-url/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git URL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../import/field-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Field selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../import/git-adoption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adopt git history
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../import/medium/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Medium archive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../import/office/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Word and EPUB import
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/docker-desktop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install Docker Desktop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/cross-platform-installers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cross-platform installers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/mobile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use on mobile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../launcher-windows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Launcher
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../launcher-macos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS Launcher
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../launcher-linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Launcher
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../uninstall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Uninstall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Assistant
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI Assistant
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai/ai-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Templates (Articles + Books)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai/offline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI offline (your own API key)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../shortcuts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keyboard Shortcuts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_19" >
+        
+          
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git Backup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Git Backup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-backup/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-backup/remote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-backup/ssh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH Keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_24" >
+        
+          
+          <label class="md-nav__link" for="__nav_24" id="__nav_24_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Settings
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_24">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Settings
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../settings/sidebar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../settings/backups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage backups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../settings/error-report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error reports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../settings/danger-zone/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Danger Zone
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../settings/defaults/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Defaults
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_25" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_25" id="__nav_25_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_25_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_25">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin Development
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Directory structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimal-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimal plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minimal plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pyprojecttoml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pyproject.toml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register-the-plugin-in-the-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Register the plugin in the backend
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pluginpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plugin.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routespy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        routes.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hooks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available hooks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-a-hook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing a hook
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#yaml-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        YAML structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessing-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-visibility-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings visibility rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frontend-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend manifest
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Frontend manifest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-ui-slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available UI slots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-adding-a-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: adding a page
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-adding-sidebar-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: adding sidebar actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zip-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ZIP distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ZIP distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zip-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ZIP structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pluginyaml-required-for-zip-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plugin.yaml (required for ZIP plugins)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#name-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Name validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#existing-plugins-for-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Existing plugins for reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-plugin-patterns-from-pgs-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import plugin patterns (from PGS-01)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Import plugin patterns (from PGS-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-1-source-adapter-over-format-re-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 1: Source adapter over format re-implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-2-two-registries-in-core-importplugin-vs-remotesourcehandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 2: Two registries in core (ImportPlugin vs RemoteSourceHandler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-3-plugin-to-plugin-dependency-via-path-dep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 3: Plugin-to-plugin dependency via path dep
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-4-pluginforge-activation-core-registry-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 4: PluginForge activation → core registry bridge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-your-first-plugin-pgs-01-as-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Write your first plugin (PGS-01 as template)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Write your first plugin (PGS-01 as template)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-decide-what-your-plugin-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Decide what your plugin does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-the-plugin-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Create the plugin package
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-implement-the-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Implement the protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-wire-activation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Wire activation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-add-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Add tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-enable-in-appyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Enable in app.yaml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-ship-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Ship it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-common-gotchas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Common gotchas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-plugin-git-sync-source-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference: plugin-git-sync source walkthrough
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bi-directional-sync-patterns-from-pgs-0205" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bi-directional sync patterns (from PGS-02..05)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bi-directional sync patterns (from PGS-02..05)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-5-per-book-lock-for-cross-subsystem-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 5: Per-book lock for cross-subsystem operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-6-soft-per-subsystem-failure-aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 6: Soft per-subsystem failure aggregation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-7-one-shot-pushurl-pattern-for-credential-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 7: One-shot pushurl pattern for credential injection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-8-failure-tolerant-lazy-imports-for-side-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 8: Failure-tolerant lazy imports for side-effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-way-diff-patterns-from-pgs-03-pgs-03-fu-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three-way diff patterns (from PGS-03 + PGS-03-FU-01)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three-way diff patterns (from PGS-03 + PGS-03-FU-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-9-read-git-refs-without-working-tree-checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 9: Read git refs without working-tree checkout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-10-pure-classification-side-effecting-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 10: Pure classification + side-effecting application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-11-post-process-collapse-for-rename-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 11: Post-process collapse for rename detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-branch-translation-group-patterns-from-pgs-04-pgs-04-fu-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-branch / translation-group patterns (from PGS-04 + PGS-04-FU-01)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-branch / translation-group patterns (from PGS-04 + PGS-04-FU-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-12-stable-reason-slugs-payload-driven-skip-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 12: Stable reason slugs + payload-driven skip surface
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-pgs-0205-commit-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference: PGS-02..05 commit walkthrough
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Directory structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimal-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimal plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minimal plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pyprojecttoml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pyproject.toml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register-the-plugin-in-the-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Register the plugin in the backend
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pluginpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plugin.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routespy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        routes.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hooks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available hooks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-a-hook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing a hook
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#yaml-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        YAML structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessing-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing config
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-visibility-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings visibility rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frontend-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend manifest
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Frontend manifest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-ui-slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available UI slots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-adding-a-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: adding a page
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-adding-sidebar-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: adding sidebar actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zip-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ZIP distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ZIP distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zip-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ZIP structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pluginyaml-required-for-zip-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plugin.yaml (required for ZIP plugins)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#name-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Name validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#existing-plugins-for-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Existing plugins for reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-plugin-patterns-from-pgs-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import plugin patterns (from PGS-01)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Import plugin patterns (from PGS-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-1-source-adapter-over-format-re-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 1: Source adapter over format re-implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-2-two-registries-in-core-importplugin-vs-remotesourcehandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 2: Two registries in core (ImportPlugin vs RemoteSourceHandler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-3-plugin-to-plugin-dependency-via-path-dep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 3: Plugin-to-plugin dependency via path dep
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-4-pluginforge-activation-core-registry-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 4: PluginForge activation → core registry bridge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-your-first-plugin-pgs-01-as-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Write your first plugin (PGS-01 as template)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Write your first plugin (PGS-01 as template)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-decide-what-your-plugin-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Decide what your plugin does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-the-plugin-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Create the plugin package
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-implement-the-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Implement the protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-wire-activation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Wire activation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-add-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Add tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-enable-in-appyaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Enable in app.yaml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-ship-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Ship it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-common-gotchas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Common gotchas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-plugin-git-sync-source-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference: plugin-git-sync source walkthrough
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bi-directional-sync-patterns-from-pgs-0205" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bi-directional sync patterns (from PGS-02..05)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bi-directional sync patterns (from PGS-02..05)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-5-per-book-lock-for-cross-subsystem-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 5: Per-book lock for cross-subsystem operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-6-soft-per-subsystem-failure-aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 6: Soft per-subsystem failure aggregation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-7-one-shot-pushurl-pattern-for-credential-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 7: One-shot pushurl pattern for credential injection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-8-failure-tolerant-lazy-imports-for-side-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 8: Failure-tolerant lazy imports for side-effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-way-diff-patterns-from-pgs-03-pgs-03-fu-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three-way diff patterns (from PGS-03 + PGS-03-FU-01)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three-way diff patterns (from PGS-03 + PGS-03-FU-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-9-read-git-refs-without-working-tree-checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 9: Read git refs without working-tree checkout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-10-pure-classification-side-effecting-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 10: Pure classification + side-effecting application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-11-post-process-collapse-for-rename-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 11: Post-process collapse for rename detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-branch-translation-group-patterns-from-pgs-04-pgs-04-fu-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-branch / translation-group patterns (from PGS-04 + PGS-04-FU-01)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-branch / translation-group patterns (from PGS-04 + PGS-04-FU-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-12-stable-reason-slugs-payload-driven-skip-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 12: Stable reason slugs + payload-driven skip surface
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-pgs-0205-commit-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference: PGS-02..05 commit walkthrough
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="plugin-developer-guide">Plugin Developer Guide<a class="headerlink" href="#plugin-developer-guide" title="Permanent link">&para;</a></h1>
+<p>This guide explains how to build plugins for Bibliogon. Plugins extend the platform with new features without modifying the core codebase.</p>
+<h2 id="architecture-overview">Architecture overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h2>
+<p>Bibliogon uses <a href="https://github.com/astrapi69/pluginforge">PluginForge</a> (PyPI) as its plugin framework, based on pluggy. Plugins are standalone Python packages discovered via entry points.</p>
+<div class="highlight"><pre><span></span><code>Frontend (React) -&gt; Backend (FastAPI) -&gt; PluginForge -&gt; Your Plugin
+</code></pre></div>
+<p>Each plugin can:
+- Add API endpoints (FastAPI routes)
+- Implement hooks (content transformation, export formats)
+- Declare UI extensions (sidebar actions, toolbar buttons, settings panels, pages)
+- Ship its own configuration (YAML)</p>
+<h2 id="directory-structure">Directory structure<a class="headerlink" href="#directory-structure" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>plugins/bibliogon-plugin-{name}/
+  bibliogon_{name}/
+    __init__.py
+    plugin.py          # Plugin class (required)
+    routes.py          # FastAPI router (optional)
+    {module}.py        # Business logic modules
+  tests/
+    test_{name}.py
+  pyproject.toml       # Package metadata + entry point (required)
+</code></pre></div>
+<p><strong>Naming conventions:</strong>
+- Plugin folder: <code>bibliogon-plugin-{name}</code> (kebab-case)
+- Python package: <code>bibliogon_{name}</code> (snake_case)
+- Plugin name in code: <code>{name}</code> (lowercase, e.g. "help", "export", "grammar")</p>
+<h2 id="minimal-plugin">Minimal plugin<a class="headerlink" href="#minimal-plugin" title="Permanent link">&para;</a></h2>
+<h3 id="pyprojecttoml">pyproject.toml<a class="headerlink" href="#pyprojecttoml" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.poetry]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bibliogon-plugin-myplugin&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;My custom Bibliogon plugin&quot;</span>
+<span class="n">authors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Your Name&quot;</span><span class="p">]</span>
+<span class="n">license</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
+<span class="n">packages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span><span class="n">include</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;bibliogon_myplugin&quot;</span><span class="p">}]</span>
+
+<span class="k">[tool.poetry.dependencies]</span>
+<span class="n">python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^3.11&quot;</span>
+<span class="n">pluginforge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^0.5.0&quot;</span>
+<span class="n">fastapi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^0.135.0&quot;</span>
+
+<span class="k">[tool.poetry.plugins.</span><span class="s2">&quot;bibliogon.plugins&quot;</span><span class="k">]</span>
+<span class="n">myplugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bibliogon_myplugin.plugin:MyPlugin&quot;</span>
+</code></pre></div>
+<p>The entry point <code>[tool.poetry.plugins."bibliogon.plugins"]</code> is how PluginForge discovers your plugin.</p>
+<h3 id="register-the-plugin-in-the-backend">Register the plugin in the backend<a class="headerlink" href="#register-the-plugin-in-the-backend" title="Permanent link">&para;</a></h3>
+<p>For <strong>bundled plugins</strong> (any plugin shipped inside the bibliogon repository under <code>plugins/</code>), you must also add a path-dependency entry to <code>backend/pyproject.toml</code> so the backend's Poetry environment installs the plugin and its entry points become discoverable:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.poetry.dependencies]</span>
+<span class="c1"># ...existing entries...</span>
+<span class="n">bibliogon-plugin-myplugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">path</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;../plugins/bibliogon-plugin-myplugin&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">develop</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span>
+</code></pre></div>
+<p>Then run <code>poetry lock</code> and <code>poetry install</code> in the <code>backend/</code> directory. <strong>Skipping this step makes the plugin invisible in CI</strong> (it works locally for anyone whose venv already has the dist-info from a previous install, but fresh checkouts and the CI runner load only what <code>pyproject.toml</code> declares). ZIP-distributed third-party plugins are exempt because they install at runtime via <code>sys.path</code>, not at setup time.</p>
+<h3 id="pluginpy">plugin.py<a class="headerlink" href="#pluginpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pluginforge</span><span class="w"> </span><span class="kn">import</span> <span class="n">BasePlugin</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyPlugin</span><span class="p">(</span><span class="n">BasePlugin</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;myplugin&quot;</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span>
+    <span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="n">license_tier</span> <span class="o">=</span> <span class="s2">&quot;core&quot;</span>           <span class="c1"># In Bibliogon &quot;core&quot; is the only value in use; all plugins are free.</span>
+    <span class="n">depends_on</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>      <span class="c1"># e.g. [&quot;export&quot;] if you need the export plugin</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when the plugin is loaded. Set up config, connections, etc.&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.routes</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_config</span>
+        <span class="n">set_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return FastAPI routers to mount.&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.routes</span><span class="w"> </span><span class="kn">import</span> <span class="n">router</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">router</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_frontend_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Declare UI extensions. Return None if no UI.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+<h3 id="routespy">routes.py<a class="headerlink" href="#routespy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span>
+
+<span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/myplugin&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;myplugin&quot;</span><span class="p">])</span>
+
+<span class="n">_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">set_config</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">global</span> <span class="n">_config</span>
+    <span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+
+
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/hello&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello from my plugin!&quot;</span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Rules:</strong>
+- routes.py contains ONLY endpoint definitions that delegate to service functions
+- Business logic goes in separate modules (e.g. <code>service.py</code>, <code>analyzer.py</code>)
+- No direct database access in routes; use service functions
+- Use Pydantic v2 for request/response schemas</p>
+<h2 id="hooks">Hooks<a class="headerlink" href="#hooks" title="Permanent link">&para;</a></h2>
+<p>Plugins can implement hooks defined in <code>backend/app/hookspecs.py</code>. Hooks allow plugins to participate in core workflows without modifying core code.</p>
+<h3 id="available-hooks">Available hooks<a class="headerlink" href="#available-hooks" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Purpose</th>
+<th>Return</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>export_formats()</code></td>
+<td>Declare supported export formats</td>
+<td><code>list[dict]</code></td>
+</tr>
+<tr>
+<td><code>export_execute(book, fmt, options)</code></td>
+<td>Run an export (first result wins)</td>
+<td><code>Path or None</code></td>
+</tr>
+<tr>
+<td><code>chapter_pre_save(content, chapter_id)</code></td>
+<td>Transform content before saving</td>
+<td><code>str or None</code></td>
+</tr>
+<tr>
+<td><code>content_pre_import(content, language)</code></td>
+<td>Transform markdown during import</td>
+<td><code>str or None</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="implementing-a-hook">Implementing a hook<a class="headerlink" href="#implementing-a-hook" title="Permanent link">&para;</a></h3>
+<p>In your <code>plugin.py</code>, add a method matching the hook name:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MyPlugin</span><span class="p">(</span><span class="n">BasePlugin</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;myplugin&quot;</span>
+    <span class="c1"># ...</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">content_pre_import</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">language</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clean up imported markdown before conversion.&quot;&quot;&quot;</span>
+        <span class="c1"># Return transformed content, or None to skip</span>
+        <span class="n">cleaned</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cleaned</span>
+</code></pre></div>
+<p>Hooks with <code>firstresult=True</code> (like <code>export_execute</code>) stop at the first plugin that returns a non-None value. Regular hooks collect results from all plugins.</p>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<p>Plugin configuration lives in <code>backend/config/plugins/{name}.yaml</code>.</p>
+<h3 id="yaml-structure">YAML structure<a class="headerlink" href="#yaml-structure" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">plugin</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myplugin&quot;</span>
+<span class="w">  </span><span class="nt">display_name</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">de</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mein</span><span class="nv"> </span><span class="s">Plugin&quot;</span>
+<span class="w">    </span><span class="nt">en</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;My</span><span class="nv"> </span><span class="s">Plugin&quot;</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">de</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Beschreibung</span><span class="nv"> </span><span class="s">des</span><span class="nv"> </span><span class="s">Plugins&quot;</span>
+<span class="w">    </span><span class="nt">en</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Plugin</span><span class="nv"> </span><span class="s">description&quot;</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.0.0&quot;</span>
+<span class="w">  </span><span class="nt">license</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MIT&quot;</span>
+<span class="w">  </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<span class="w">  </span><span class="nt">api_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+
+<span class="nt">settings</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">my_option</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span>
+<span class="w">  </span><span class="nt">language_list</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">de</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">en</span>
+</code></pre></div>
+<h3 id="accessing-config">Accessing config<a class="headerlink" href="#accessing-config" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># self.config contains the parsed YAML</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;settings&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;threshold&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="settings-visibility-rules">Settings visibility rules<a class="headerlink" href="#settings-visibility-rules" title="Permanent link">&para;</a></h3>
+<p>Every setting in the YAML must either:
+1. Be editable in the plugin UI (Settings &gt; Plugins &gt; {name}), OR
+2. Be marked with <code># INTERNAL</code> comment</p>
+<p>Hidden settings that influence user behavior without a UI are not allowed.</p>
+<h2 id="frontend-manifest">Frontend manifest<a class="headerlink" href="#frontend-manifest" title="Permanent link">&para;</a></h2>
+<p>Plugins declare UI extensions via <code>get_frontend_manifest()</code>. The frontend queries <code>/api/plugins/manifests</code> to discover all extensions.</p>
+<h3 id="available-ui-slots">Available UI slots<a class="headerlink" href="#available-ui-slots" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Location</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pages</code></td>
+<td>App navigation</td>
+<td>Full-page plugin UI</td>
+</tr>
+<tr>
+<td><code>sidebar_actions</code></td>
+<td>BookEditor sidebar</td>
+<td>Action buttons</td>
+</tr>
+<tr>
+<td><code>toolbar_buttons</code></td>
+<td>Editor toolbar</td>
+<td>Formatting tools</td>
+</tr>
+<tr>
+<td><code>editor_panels</code></td>
+<td>Beside the editor</td>
+<td>Side panels</td>
+</tr>
+<tr>
+<td><code>settings_section</code></td>
+<td>Settings &gt; Plugins</td>
+<td>Plugin configuration</td>
+</tr>
+<tr>
+<td><code>export_options</code></td>
+<td>Export dialog</td>
+<td>Format-specific options</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-adding-a-page">Example: adding a page<a class="headerlink" href="#example-adding-a-page" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_frontend_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;pages&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;myplugin&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/myplugin&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;Mein Plugin&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;My Plugin&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;puzzle&quot;</span><span class="p">,</span>  <span class="c1"># lucide-react icon name</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+</code></pre></div>
+<h3 id="example-adding-sidebar-actions">Example: adding sidebar actions<a class="headerlink" href="#example-adding-sidebar-actions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_frontend_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;sidebar_actions&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;myplugin_analyze&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;Analysieren&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Analyze&quot;</span><span class="p">},</span>
+                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;bar-chart&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/myplugin/analyze/</span><span class="si">{book_id}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+</code></pre></div>
+<p>For complex plugin UIs, you can ship Web Components as custom elements (compiled JS bundle in the plugin ZIP).</p>
+<h2 id="zip-distribution">ZIP distribution<a class="headerlink" href="#zip-distribution" title="Permanent link">&para;</a></h2>
+<p>Third-party plugins are distributed as ZIP files and installed via Settings &gt; Plugins.</p>
+<h3 id="zip-structure">ZIP structure<a class="headerlink" href="#zip-structure" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>myplugin.zip
+  plugin.yaml          # Required: plugin metadata
+  bibliogon_myplugin/
+    __init__.py
+    plugin.py
+    routes.py
+    service.py
+  config/
+    myplugin.yaml      # Plugin configuration
+</code></pre></div>
+<h3 id="pluginyaml-required-for-zip-plugins">plugin.yaml (required for ZIP plugins)<a class="headerlink" href="#pluginyaml-required-for-zip-plugins" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myplugin</span>
+<span class="nt">display_name</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">de</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Mein</span><span class="nv"> </span><span class="s">Plugin&quot;</span>
+<span class="w">  </span><span class="nt">en</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;My</span><span class="nv"> </span><span class="s">Plugin&quot;</span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.0.0&quot;</span>
+<span class="nt">package</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bibliogon_myplugin</span>
+<span class="nt">entry_class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MyPlugin</span>
+</code></pre></div>
+<h3 id="installation-flow">Installation flow<a class="headerlink" href="#installation-flow" title="Permanent link">&para;</a></h3>
+<ol>
+<li>User uploads ZIP at Settings &gt; Plugins</li>
+<li>Server validates: safe name, no path traversal, contains plugin.yaml + plugin.py</li>
+<li>Extracted to <code>plugins/installed/{name}/</code></li>
+<li>Config written to <code>config/plugins/{name}.yaml</code></li>
+<li>Plugin loaded dynamically via sys.path + PluginManager</li>
+</ol>
+<h3 id="name-validation">Name validation<a class="headerlink" href="#name-validation" title="Permanent link">&para;</a></h3>
+<p>Plugin names must match: <code>[a-z][a-z0-9_-]{1,48}[a-z0-9]</code> (3-50 chars, lowercase letters, digits, hyphens, underscores).</p>
+<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
+<p>Plugin tests live in <code>plugins/bibliogon-plugin-{name}/tests/</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Run tests for a specific plugin</span>
+make<span class="w"> </span>test-plugin-<span class="o">{</span>name<span class="o">}</span>
+
+<span class="c1"># Run all plugin tests</span>
+make<span class="w"> </span>test-plugins
+</code></pre></div>
+<h3 id="test-pattern">Test pattern<a class="headerlink" href="#test-pattern" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bibliogon_myplugin.service</span><span class="w"> </span><span class="kn">import</span> <span class="n">analyze_text</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_analyze_detects_issues</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">analyze_text</span><span class="p">(</span><span class="s2">&quot;This is a test.&quot;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_analyze_empty_text</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">analyze_text</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="p">[]</span>
+</code></pre></div>
+<p>For integration tests with the API, use FastAPI's TestClient:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi.testclient</span><span class="w"> </span><span class="kn">import</span> <span class="n">TestClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">app.main</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_hello_endpoint</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/api/myplugin/hello&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+        <span class="k">assert</span> <span class="s2">&quot;message&quot;</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h2>
+<p>If your plugin needs a dependency not in the core, declare it in your <code>pyproject.toml</code>. For ZIP-distributed plugins, dependencies must be bundled or already available in the Bibliogon environment.</p>
+<p>Do NOT add new dependencies to the core without asking. The existing stack:
+- Backend: FastAPI, SQLAlchemy, Pydantic v2, pluginforge, PyYAML, httpx
+- Frontend: React 19, TypeScript 6, Vite 8 (Rolldown bundler), TipTap, Radix UI, Lucide. Node.js 24+ required (<code>engines.node &gt;=24.0.0</code>).</p>
+<h2 id="existing-plugins-for-reference">Existing plugins for reference<a class="headerlink" href="#existing-plugins-for-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Complexity</th>
+<th>Good example for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>help</td>
+<td>Simple</td>
+<td>Routes + config + i18n</td>
+</tr>
+<tr>
+<td>ms-tools</td>
+<td>Medium</td>
+<td>Hooks + per-book settings + UI panel</td>
+</tr>
+<tr>
+<td>export</td>
+<td>Complex</td>
+<td>Multiple formats + async jobs + scaffolding</td>
+</tr>
+<tr>
+<td>audiobook</td>
+<td>Complex</td>
+<td>External APIs + SSE progress + persistence</td>
+</tr>
+<tr>
+<td>git-sync</td>
+<td>Medium</td>
+<td>Import plugin + plugin-to-plugin dependency</td>
+</tr>
+</tbody>
+</table>
+<p>Study the help plugin first as a starting template, then ms-tools for hook implementation patterns.</p>
+<hr />
+<h2 id="import-plugin-patterns-from-pgs-01">Import plugin patterns (from PGS-01)<a class="headerlink" href="#import-plugin-patterns-from-pgs-01" title="Permanent link">&para;</a></h2>
+<p>When a plugin adds support for importing a new format or a new <em>source</em> of books, the core import orchestrator (<code>backend/app/import_plugins/</code>) is the integration point. The first external import plugin (<code>plugin-git-sync</code>, PGS-01) shipped with four architectural patterns worth naming — each solves a problem future import plugins will hit.</p>
+<h3 id="pattern-1-source-adapter-over-format-re-implementation">Pattern 1: Source adapter over format re-implementation<a class="headerlink" href="#pattern-1-source-adapter-over-format-re-implementation" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> Your plugin wants to import books from a new <em>source</em> (a git URL, a cloud-drive link, a gist, ...), but the underlying <em>format</em> already has a handler in core or another plugin. Re-implementing the parser to handle URL-fetching creates duplicate code that drifts.</p>
+<p><strong>Solution.</strong> Your plugin is a <strong>source adapter</strong>: it fetches or prepares the data into a filesystem path, then hands off to the already-working format handler. Don't re-parse the format.</p>
+<p><strong>PGS-01 example.</strong> <code>GitImportHandler.clone(url, target_dir)</code> clones into the orchestrator's staging directory, returning the project root path. The endpoint then calls <code>find_handler(staged_path)</code>, which picks up <code>WbtImportHandler</code> (a core handler already shipped in CIO-02). The plugin never parses <code>config/metadata.yaml</code> or walks <code>manuscript/</code> — <code>WbtImportHandler</code> does that.</p>
+<p><strong>Benefits.</strong>
+- Zero duplication. A bug fix in the format handler helps every source automatically.
+- Consistent <code>DetectedProject</code> payloads across sources (same preview, same duplicate detection, same override allowlist).
+- Your plugin is small — ~100 LOC for the handler, not 500+.</p>
+<p><strong>When NOT to use.</strong> If the format is genuinely new (no existing handler produces a <code>DetectedProject</code> from it), you build a real <code>ImportPlugin</code> and parse it yourself. Source-adapter only works if there is a format handler downstream to hand off to.</p>
+<h3 id="pattern-2-two-registries-in-core-importplugin-vs-remotesourcehandler">Pattern 2: Two registries in core (<code>ImportPlugin</code> vs <code>RemoteSourceHandler</code>)<a class="headerlink" href="#pattern-2-two-registries-in-core-importplugin-vs-remotesourcehandler" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> A file-path input has a filesystem path at detect-time; a URL does not — it needs to be cloned/fetched first. Trying to stuff both shapes into one registry forces <code>isinstance</code> heuristics inside <code>find_handler()</code>, which is a code smell.</p>
+<p><strong>Solution.</strong> Separate registries for separate input shapes. Both share the <code>temp_ref</code> + staging-directory mechanism for execute.</p>
+<ul>
+<li><code>ImportPlugin</code> (in <code>backend/app/import_plugins/protocol.py</code>): file-path inputs. <code>can_handle(path) -&gt; bool</code>, <code>detect(path)</code>, <code>execute(path, ...)</code>.</li>
+<li><code>RemoteSourceHandler</code> (in <code>backend/app/import_plugins/registry.py</code>, added in PGS-01): URL-shaped inputs. <code>can_handle(url) -&gt; bool</code>, <code>clone(url, target_dir) -&gt; Path</code>. After clone, the orchestrator dispatches through <code>find_handler()</code> on the cloned path, so format detection reuses the <code>ImportPlugin</code> side.</li>
+</ul>
+<p><strong>When adding a third input shape.</strong> If your plugin brings a new input shape that doesn't fit either (e.g. "book from a SQL query result"), weigh: (a) normalising it to one of the existing shapes in your plugin, (b) adding a third registry with a new endpoint (<code>POST /api/import/detect/{kind}</code>). Prefer (a) — it keeps the registry count small.</p>
+<p><strong>Anti-pattern.</strong> <code>if input.startswith("http"): ... elif Path(input).is_dir(): ...</code> inside a single <code>find_handler</code> pollutes the abstraction with shape-detection. Keep dispatch semantic, not syntactic.</p>
+<h3 id="pattern-3-plugin-to-plugin-dependency-via-path-dep">Pattern 3: Plugin-to-plugin dependency via path dep<a class="headerlink" href="#pattern-3-plugin-to-plugin-dependency-via-path-dep" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> Your plugin needs utility code from another plugin (e.g. <code>tiptap_to_markdown</code> from <code>plugin-export</code>). You don't want to copy the code, and you can't (yet) pip-install the other plugin because both live in the same monorepo.</p>
+<p><strong>Solution.</strong> Declare the dependency in <code>pyproject.toml</code> via a relative path:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.poetry.dependencies]</span>
+<span class="n">bibliogon-plugin-export</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">path</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;../bibliogon-plugin-export&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">develop</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span>
+</code></pre></div>
+<p>Then <code>poetry install</code> inside the plugin's directory wires the other plugin into the venv. Imports work as if it were a PyPI package.</p>
+<p><strong>PGS-01 example.</strong> <code>plugin-git-sync</code> declares <code>bibliogon-plugin-export</code> as a path dep. Phase 1 does not yet exercise the dependency at runtime — it is scaffolding for PGS-02 (export-to-repo) which will call <code>from bibliogon_export.tiptap_to_md import tiptap_to_markdown</code> to serialise books back into the git repository. The declaration is made early so the architecture is visible even before the code arrives.</p>
+<p><strong>When publishing to PyPI.</strong> A path dep stops resolving on <code>pip install bibliogon-plugin-git-sync</code> outside the monorepo. The publication step must replace it with a version pin:</p>
+<div class="highlight"><pre><span></span><code><span class="n">bibliogon-plugin-export</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.0.0,&lt;2.0.0&quot;</span>
+</code></pre></div>
+<p>Do this as part of the PyPI release, not during development.</p>
+<p><strong>When the dependency is optional.</strong> If your plugin can function without the other plugin, don't declare a path dep — use a deferred import inside the code path that needs it, catch <code>ImportError</code>, and degrade gracefully. Path deps are for required dependencies.</p>
+<h3 id="pattern-4-pluginforge-activation-core-registry-bridge">Pattern 4: PluginForge activation → core registry bridge<a class="headerlink" href="#pattern-4-pluginforge-activation-core-registry-bridge" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> PluginForge discovers plugins via entry points; Bibliogon's core registries (<code>ImportPlugin</code>, <code>RemoteSourceHandler</code>, hookspecs, ...) each have their own <code>register(...)</code> function. Something has to bridge "PluginForge loaded this plugin" to "Bibliogon knows about its handlers."</p>
+<p><strong>Solution.</strong> The plugin's <code>activate()</code> hook does a deferred import of the core registration function and calls it:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># plugins/bibliogon-plugin-git-sync/bibliogon_git_sync/plugin.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pluginforge</span><span class="w"> </span><span class="kn">import</span> <span class="n">BasePlugin</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">GitSyncPlugin</span><span class="p">(</span><span class="n">BasePlugin</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;git-sync&quot;</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span>
+    <span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="n">license_tier</span> <span class="o">=</span> <span class="s2">&quot;core&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">bibliogon_git_sync.handlers.git_handler</span><span class="w"> </span><span class="kn">import</span> <span class="n">GitImportHandler</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.registration</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_git_handler</span>
+
+        <span class="n">register_git_handler</span><span class="p">(</span><span class="n">GitImportHandler</span><span class="p">())</span>
+</code></pre></div>
+<p>And <code>registration.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_git_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">app.import_plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_remote_handler</span>
+    <span class="n">register_remote_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
+</code></pre></div>
+<p><strong>Why the deferred imports.</strong> Importing <code>app.*</code> at module-top couples the plugin module to the full Bibliogon backend being loaded. That breaks plugin-level unit tests that just want to exercise the handler's logic. Deferring to inside <code>activate()</code> (which only fires at app lifespan) keeps the plugin module importable standalone.</p>
+<p><strong>Timing.</strong> PluginForge runs <code>activate()</code> during <code>manager.discover_plugins()</code> in the app lifespan, before the first HTTP request. By the time any route fires, all registrations have already happened.</p>
+<p><strong>Anti-pattern.</strong> Using module-top-level side-effect imports (<code>register_remote_handler(...)</code> at the bottom of <code>plugin.py</code>) works in production but breaks standalone test runs and makes import ordering fragile. Always go through <code>activate()</code>.</p>
+<hr />
+<h2 id="write-your-first-plugin-pgs-01-as-template">Write your first plugin (PGS-01 as template)<a class="headerlink" href="#write-your-first-plugin-pgs-01-as-template" title="Permanent link">&para;</a></h2>
+<p>A step-by-step walkthrough using PGS-01's shape. End state: a working plugin skeleton you can extend.</p>
+<h3 id="step-1-decide-what-your-plugin-does">Step 1: Decide what your plugin does<a class="headerlink" href="#step-1-decide-what-your-plugin-does" title="Permanent link">&para;</a></h3>
+<p>Three common shapes:</p>
+<table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>Protocol</th>
+<th>Registers with</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New format</td>
+<td><code>ImportPlugin</code></td>
+<td><code>app.import_plugins.register</code></td>
+<td><code>WbtImportHandler</code> (core, CIO-02)</td>
+</tr>
+<tr>
+<td>New source</td>
+<td><code>RemoteSourceHandler</code></td>
+<td><code>app.import_plugins.register_remote_handler</code></td>
+<td><code>GitImportHandler</code> (PGS-01)</td>
+</tr>
+<tr>
+<td>New core behaviour</td>
+<td>Pluggy <code>@hookimpl</code></td>
+<td><code>BibliogonHookSpec</code> (see <code>backend/app/hookspecs.py</code>)</td>
+<td><code>plugin-grammar</code> (content_pre_import)</td>
+</tr>
+</tbody>
+</table>
+<p>Pick one. If your work genuinely spans two (e.g. a format plugin that also adds a hookspec), do both — PluginForge allows it.</p>
+<h3 id="step-2-create-the-plugin-package">Step 2: Create the plugin package<a class="headerlink" href="#step-2-create-the-plugin-package" title="Permanent link">&para;</a></h3>
+<p>Layout matches the other 10 plugins:</p>
+<div class="highlight"><pre><span></span><code>plugins/bibliogon-plugin-&lt;name&gt;/
+├── pyproject.toml
+├── README.md
+├── bibliogon_&lt;name&gt;/
+│   ├── __init__.py
+│   ├── plugin.py           # BasePlugin subclass, activate() hook
+│   └── handlers/
+│       ├── __init__.py
+│       └── &lt;kind&gt;_handler.py
+└── tests/
+    ├── __init__.py
+    └── test_&lt;kind&gt;_handler.py
+</code></pre></div>
+<p>Minimum <code>pyproject.toml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.poetry]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bibliogon-plugin-&lt;name&gt;&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;One-line description.&quot;</span>
+<span class="n">authors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&lt;you&gt;&quot;</span><span class="p">]</span>
+<span class="n">license</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
+<span class="n">readme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;README.md&quot;</span>
+<span class="n">packages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span><span class="n">include</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;bibliogon_&lt;name&gt;&quot;</span><span class="p">}]</span>
+
+<span class="k">[tool.poetry.dependencies]</span>
+<span class="n">python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^3.11&quot;</span>
+<span class="n">pluginforge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^0.5.0&quot;</span>
+<span class="n">fastapi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^0.135.0&quot;</span>
+<span class="c1"># Add runtime deps here (e.g. gitpython for plugin-git-sync)</span>
+
+<span class="k">[tool.poetry.group.dev.dependencies]</span>
+<span class="n">pytest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^9.0&quot;</span>
+<span class="n">pytest-cov</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;^7.1.0&quot;</span>
+
+<span class="k">[tool.poetry.plugins.</span><span class="s2">&quot;bibliogon.plugins&quot;</span><span class="k">]</span>
+<span class="err">&lt;</span><span class="n">name</span><span class="err">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;bibliogon_&lt;name&gt;.plugin:&lt;Name&gt;Plugin&quot;</span>
+
+<span class="k">[build-system]</span>
+<span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;poetry-core&quot;</span><span class="p">]</span>
+<span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;poetry.core.masonry.api&quot;</span>
+</code></pre></div>
+<p>Also add the plugin to <code>backend/pyproject.toml</code> as a path dep (see "Register the plugin in the backend" above). Skip this and CI treats the plugin as invisible.</p>
+<h3 id="step-3-implement-the-protocol">Step 3: Implement the protocol<a class="headerlink" href="#step-3-implement-the-protocol" title="Permanent link">&para;</a></h3>
+<p>Copy the shape from the plugin closest to yours (table in Step 1). For a <code>RemoteSourceHandler</code>, the minimum signature is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="err">&lt;</span><span class="nc">Name</span><span class="o">&gt;</span><span class="n">Handler</span><span class="p">:</span>
+    <span class="n">source_kind</span> <span class="o">=</span> <span class="s2">&quot;&lt;kind&gt;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">can_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="o">...</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span> <span class="o">...</span>
+</code></pre></div>
+<p>Return the path the orchestrator should dispatch through (usually a subdirectory inside <code>target_dir</code>). Raise exceptions for unrecoverable errors; the endpoint maps them to HTTP 502.</p>
+<h3 id="step-4-wire-activation">Step 4: Wire activation<a class="headerlink" href="#step-4-wire-activation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># bibliogon_&lt;name&gt;/plugin.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pluginforge</span><span class="w"> </span><span class="kn">import</span> <span class="n">BasePlugin</span>
+
+<span class="k">class</span><span class="w"> </span><span class="err">&lt;</span><span class="nc">Name</span><span class="o">&gt;</span><span class="n">Plugin</span><span class="p">(</span><span class="n">BasePlugin</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&lt;name&gt;&quot;</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span>
+    <span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="n">license_tier</span> <span class="o">=</span> <span class="s2">&quot;core&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.handlers.</span><span class="o">&lt;</span><span class="n">kind</span><span class="o">&gt;</span><span class="n">_handler</span> <span class="kn">import</span><span class="w"> </span><span class="o">&lt;</span><span class="n">Name</span><span class="o">&gt;</span><span class="n">Handler</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">.registration</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_</span><span class="o">&lt;</span><span class="n">kind</span><span class="o">&gt;</span><span class="n">_handler</span>
+
+        <span class="n">register_</span><span class="o">&lt;</span><span class="n">kind</span><span class="o">&gt;</span><span class="n">_handler</span><span class="p">(</span><span class="o">&lt;</span><span class="n">Name</span><span class="o">&gt;</span><span class="n">Handler</span><span class="p">())</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># bibliogon_&lt;name&gt;/registration.py</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_</span><span class="o">&lt;</span><span class="n">kind</span><span class="o">&gt;</span><span class="n">_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">app.import_plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_</span><span class="o">&lt;</span><span class="n">kind</span><span class="o">&gt;</span><span class="n">_handler</span> <span class="k">as</span> <span class="n">core_register</span>
+    <span class="n">core_register</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+</code></pre></div>
+<p>Deferred imports are load-bearing. Keep them inside the function body.</p>
+<h3 id="step-5-add-tests">Step 5: Add tests<a class="headerlink" href="#step-5-add-tests" title="Permanent link">&para;</a></h3>
+<p>Three levels, each in its own file:</p>
+<ul>
+<li><strong>Plugin-level</strong> (<code>plugins/bibliogon-plugin-&lt;name&gt;/tests/test_&lt;kind&gt;_handler.py</code>): unit tests of the handler class. Mock external services (GitPython, HTTP clients, etc.). No app load.</li>
+<li><strong>Endpoint-level</strong> (<code>backend/tests/test_import_&lt;kind&gt;_endpoint.py</code>): <code>TestClient(app)</code>, hits <code>POST /api/import/detect/&lt;kind&gt;</code>, mocks your handler's external dependency so the plugin-endpoint-handler chain is exercised without network. Use <code>scope="module"</code> on the <code>client</code> fixture to keep lifespan-state accumulation down (see the RecursionError note in <code>.claude/rules/lessons-learned.md</code>).</li>
+<li><strong>Plugin smoke</strong> (same file, 1-2 tests): assert <code>list_remote_handlers()</code> (or the equivalent) contains your handler after lifespan. Regression guard against the "plugin not in <code>app.yaml</code> enabled list" class of bug.</li>
+</ul>
+<h3 id="step-6-enable-in-appyaml">Step 6: Enable in app.yaml<a class="headerlink" href="#step-6-enable-in-appyaml" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">plugins</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">help</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;name&gt;</span>
+</code></pre></div>
+<p>Edit <code>backend/config/app.yaml.example</code> — that file is the source of truth for fresh installs. The local <code>backend/config/app.yaml</code> is gitignored; on first startup PS-01 copies <code>.example</code> over so your addition propagates to all users.</p>
+<h3 id="step-7-ship-it">Step 7: Ship it<a class="headerlink" href="#step-7-ship-it" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>docs/ROADMAP.md</code>: flip the entry for your phase to <code>[x]</code> with a one-paragraph completion note.</li>
+<li><code>docs/help/_meta.yaml</code>: add a nav entry if your plugin has user-facing behaviour.</li>
+<li><code>docs/help/{de,en}/&lt;topic&gt;/&lt;slug&gt;.md</code>: write the user-facing help page. DE + EN minimum.</li>
+<li><code>backend/config/plugins/help.yaml</code>: add at least one FAQ entry pointing users at the new feature.</li>
+<li><code>Makefile</code>: add <code>test-plugin-&lt;name&gt;</code> target and include it in the <code>test-plugins</code> list.</li>
+</ul>
+<h3 id="step-8-common-gotchas">Step 8: Common gotchas<a class="headerlink" href="#step-8-common-gotchas" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Handler not registered at runtime.</strong> Plugin is not in <code>app.yaml</code> enabled list. PluginForge discovered the entry point but skipped activation.</li>
+<li><strong>Plugin works locally but fails in CI.</strong> Path dep missing from <code>backend/pyproject.toml</code>. The backend venv is the authoritative environment; CI installs exactly what's declared there.</li>
+<li><strong>Import cycle on plugin load.</strong> Something in <code>plugin.py</code> module-top imports <code>app.*</code>. Move it inside <code>activate()</code> or another function body.</li>
+<li><strong>Tests pass individually but the full suite fails with RecursionError.</strong> Per-test <code>TestClient(app)</code> fixtures accumulate plugin-route state on the shared FastAPI singleton. Use <code>scope="module"</code> (see <code>.claude/rules/lessons-learned.md</code> for the diagnosis).</li>
+<li><strong>Plugin-to-plugin dep not resolving.</strong> Relative <code>path = "../..."</code> in your <code>pyproject.toml</code> doesn't match the actual directory layout. Fix or run <code>poetry lock</code>.</li>
+<li><strong>Handler's <code>can_handle</code> never fires.</strong> Check registration ordering: first-registered wins in <code>find_handler()</code>. If an earlier handler claims every input, yours is unreachable.</li>
+</ul>
+<hr />
+<h2 id="reference-plugin-git-sync-source-walkthrough">Reference: <code>plugin-git-sync</code> source walkthrough<a class="headerlink" href="#reference-plugin-git-sync-source-walkthrough" title="Permanent link">&para;</a></h2>
+<p>For a concrete example of everything above, read the PGS-01 commits in order — each one is a single atomic step:</p>
+<table>
+<thead>
+<tr>
+<th>Commit</th>
+<th>Concern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>c93d496</code></td>
+<td>Plugin scaffold + pyproject + backend path dep</td>
+</tr>
+<tr>
+<td><code>4fb9e99</code></td>
+<td>Frontend input + API client + i18n</td>
+</tr>
+<tr>
+<td><code>c14c8c7</code></td>
+<td>Core registry + endpoint (no plugin behaviour yet)</td>
+</tr>
+<tr>
+<td><code>a3616f3</code></td>
+<td>Handler implementation + plugin-level tests</td>
+</tr>
+<tr>
+<td><code>df6cb39</code></td>
+<td><code>app.yaml</code> wiring + E2E integration test</td>
+</tr>
+<tr>
+<td><code>ced994c</code></td>
+<td>ROADMAP flip + help docs</td>
+</tr>
+</tbody>
+</table>
+<p>Study each diff next to this guide.</p>
+<hr />
+<h2 id="bi-directional-sync-patterns-from-pgs-0205">Bi-directional sync patterns (from PGS-02..05)<a class="headerlink" href="#bi-directional-sync-patterns-from-pgs-0205" title="Permanent link">&para;</a></h2>
+<p>PGS-01 brought books <em>into</em> Bibliogon from a remote source. Phases 2-5 round-trip the other direction — re-scaffold a book and push it back to the same remote. That round-trip surfaces four patterns any plugin that modifies external state will hit.</p>
+<h3 id="pattern-5-per-book-lock-for-cross-subsystem-operations">Pattern 5: Per-book lock for cross-subsystem operations<a class="headerlink" href="#pattern-5-per-book-lock-for-cross-subsystem-operations" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> A user clicks "Commit everywhere" and your code fans the call out to two subsystems (core git + plugin-git-sync). Without coordination, two simultaneous fan-outs (a stale dialog open in another tab, a re-click during a slow first attempt) race against each other on the working tree and <code>last_committed_at</code> cursor.</p>
+<p><strong>Solution.</strong> A keyed lock on <code>book_id</code> with a short timeout. PGS-05 ships <code>app.services.git_sync_lock.book_commit_lock(book_id, timeout=30)</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">app.services.git_sync_lock</span><span class="w"> </span><span class="kn">import</span> <span class="n">book_commit_lock</span>
+
+<span class="k">with</span> <span class="n">book_commit_lock</span><span class="p">(</span><span class="n">book_id</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+    <span class="c1"># core git first (smaller blast radius), plugin-git-sync second</span>
+    <span class="o">...</span>
+</code></pre></div>
+<p>Timeout maps to HTTP 503 in the router, never 500. The user sees "another commit is running" and retries.</p>
+<p><strong>When to use.</strong> Any time a single user action fans out into ≥2 mutating subsystems on the same resource. The lock is per-resource, not per-process.</p>
+<p><strong>Anti-pattern.</strong> Implicitly relying on "no one will click twice" is the bug; it works in your QA but breaks when SSE reconnects retry the same call, when a slow first attempt times out the toast and the user re-clicks, etc. Always lock.</p>
+<h3 id="pattern-6-soft-per-subsystem-failure-aggregation">Pattern 6: Soft per-subsystem failure aggregation<a class="headerlink" href="#pattern-6-soft-per-subsystem-failure-aggregation" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> When the fan-out runs core git + plugin-git-sync, partial failure is the norm: one side succeeds, the other fails on auth, network, or "nothing to commit." A hard <code>raise HTTPException(500)</code> loses the success and leaves the user staring at a generic error.</p>
+<p><strong>Solution.</strong> Per-subsystem result with a stable status enum. The router collects:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SubsystemResult</span><span class="p">:</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;ok&quot;</span><span class="p">,</span> <span class="s2">&quot;skipped&quot;</span><span class="p">,</span> <span class="s2">&quot;nothing_to_commit&quot;</span><span class="p">,</span> <span class="s2">&quot;failed&quot;</span><span class="p">]</span>
+    <span class="n">detail</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">commit_sha</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pushed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+<p>Both subsystem results land in the response body even when one failed. The toast tier (success / warning / error) is decided client-side from the combined statuses, so the user sees "core succeeded, plugin failed (auth)" instead of "Internal Server Error."</p>
+<p>The 503 path stays — but it triggers ONLY when the per-book lock can't be acquired. Subsystem-level errors stay inside the 200 payload.</p>
+<p><strong>When to use.</strong> Any endpoint that orchestrates ≥2 subsystems where partial success is meaningful. If both subsystems must succeed atomically (e.g. financial transactions), this pattern doesn't fit — use a transaction boundary instead.</p>
+<h3 id="pattern-7-one-shot-pushurl-pattern-for-credential-injection">Pattern 7: One-shot pushurl pattern for credential injection<a class="headerlink" href="#pattern-7-one-shot-pushurl-pattern-for-credential-injection" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> Embedding a PAT into <code>origin</code>'s URL via <code>git remote set-url</code> works for HTTPS push, but the PAT then lives in <code>.git/config</code> on disk. A backup-style read of the repo would leak the token.</p>
+<p><strong>Solution.</strong> Set the embedded URL just before push, restore the original URL in a <code>finally</code> block. PGS-02's <code>_push</code> does:</p>
+<div class="highlight"><pre><span></span><code><span class="n">original_url</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">urls</span><span class="p">)</span>
+<span class="n">auth_url</span> <span class="o">=</span> <span class="n">git_credentials</span><span class="o">.</span><span class="n">inject_pat_into_url</span><span class="p">(</span><span class="n">original_url</span><span class="p">,</span> <span class="n">book_id</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">auth_url</span> <span class="o">!=</span> <span class="n">original_url</span><span class="p">:</span>
+        <span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">set_url</span><span class="p">(</span><span class="n">auth_url</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">refspec</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">branch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">auth_url</span> <span class="o">!=</span> <span class="n">original_url</span><span class="p">:</span>
+        <span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">set_url</span><span class="p">(</span><span class="n">original_url</span><span class="p">)</span>
+</code></pre></div>
+<p>After return the on-disk URL is back to the original. A regression test (<code>test_commit_push_uses_per_book_pat_without_persisting_to_git_config</code>) reads <code>.git/config</code> after a push and asserts the token never appears.</p>
+<p><strong>When to use.</strong> Any time you embed a secret into a config field as a temporary auth carrier.</p>
+<p><strong>Per-book credential helper.</strong> PGS-02-FU-01 added <code>app.services.git_credentials</code> so multiple subsystems share a single per-book PAT slot. If you need credentials for any new subsystem on the same book, reuse this helper rather than building a parallel store. Encrypted-at-rest via Fernet with a key derived from <code>BIBLIOGON_CREDENTIALS_SECRET</code>.</p>
+<h3 id="pattern-8-failure-tolerant-lazy-imports-for-side-effects">Pattern 8: Failure-tolerant lazy imports for side-effects<a class="headerlink" href="#pattern-8-failure-tolerant-lazy-imports-for-side-effects" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> Your plugin produces a primary artifact (e.g. a commit) and a "nice to have" companion (e.g. a Markdown side-file rendered next to the canonical JSON for readable git diffs). The companion writer depends on another plugin's converter via path dep. When the companion writer breaks, the primary artifact must still ship.</p>
+<p><strong>Solution.</strong> Lazy-import the helper inside a <code>try/except</code>, log on failure, and continue. PGS-05's Markdown side-file emitter:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_write_md_side_file</span><span class="p">(</span><span class="n">json_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">bibliogon_export.tiptap_to_md</span><span class="w"> </span><span class="kn">import</span> <span class="n">tiptap_to_markdown</span>  <span class="c1"># lazy</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Markdown side-file: import failed; skipping.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># ... convert + write</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Markdown side-file: conversion failed; skipping.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>The commit still lands; the side-file may not. The next commit retries.</p>
+<p><strong>When to use.</strong> Any time you produce a non-canonical companion artifact. If the companion is the only artifact (e.g. the export plugin's EPUB output), this pattern doesn't apply — failures must surface as hard errors.</p>
+<p><strong>Anti-pattern.</strong> Eagerly importing the helper at plugin module top: a future refactor to the helper plugin will break load-time discovery of <em>your</em> plugin even though your primary work is unrelated.</p>
+<hr />
+<h2 id="three-way-diff-patterns-from-pgs-03-pgs-03-fu-01">Three-way diff patterns (from PGS-03 + PGS-03-FU-01)<a class="headerlink" href="#three-way-diff-patterns-from-pgs-03-pgs-03-fu-01" title="Permanent link">&para;</a></h2>
+<p>When your plugin re-imports content from an external source that the user has also been editing locally, you need to surface the diff so the user can resolve. PGS-03 shipped a three-way diff (base / local / remote) over chapters; the patterns generalize.</p>
+<h3 id="pattern-9-read-git-refs-without-working-tree-checkout">Pattern 9: Read git refs without working-tree checkout<a class="headerlink" href="#pattern-9-read-git-refs-without-working-tree-checkout" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> Computing a base-vs-remote diff requires reading file content at TWO commits. A naive <code>git checkout &lt;ref&gt;</code> swaps the working tree, which racing against your scaffolder breaks the user's commit-to-repo flow.</p>
+<p><strong>Solution.</strong> <code>git ls-tree -r --name-only &lt;commit&gt; &lt;prefix&gt;</code> + <code>git show &lt;commit&gt;:&lt;path&gt;</code> are read-only and never touch the working tree. PGS-03's <code>_read_wbt_at_ref(clone_path, ref)</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">commit</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">ls_tree</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;--name-only&quot;</span><span class="p">,</span> <span class="n">commit</span><span class="o">.</span><span class="n">hexsha</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.md&quot;</span><span class="p">):</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">commit</span><span class="o">.</span><span class="n">hexsha</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># ...</span>
+</code></pre></div>
+<p>Resolves the ref to a commit first so subsequent <code>show</code> calls are deterministic even if the branch moves underneath.</p>
+<p><strong>When to use.</strong> Any time you need to read content at multiple refs in the same logical operation. Treat the working tree as exclusive to commit-to-repo / merge / checkout — never to read-only inspection.</p>
+<h3 id="pattern-10-pure-classification-side-effecting-application">Pattern 10: Pure classification + side-effecting application<a class="headerlink" href="#pattern-10-pure-classification-side-effecting-application" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> A diff has two responsibilities: figure out <em>what changed</em> (per-chapter classification) and <em>apply the user's resolution</em> (mutate the DB). Mixing them produces a single 200-line function that's untestable without a real git repo + DB.</p>
+<p><strong>Solution.</strong> Two separate functions:</p>
+<ul>
+<li><code>_classify(base, local, remote) -&gt; list[ChapterDiff]</code>: pure. Takes three dicts of identity → content. Returns a list of classifications. No git, no DB. Unit-testable from in-memory dicts.</li>
+<li><code>apply_resolutions(db, *, book_id, resolutions)</code>: side-effecting. Mutates the DB based on the user's per-chapter choice and bumps the cursor.</li>
+</ul>
+<p><code>diff_book(db, book_id)</code> is the thin glue that reads inputs (via Pattern 9) and feeds them into <code>_classify</code>.</p>
+<p><strong>When to use.</strong> Any non-trivial decision that ends in a DB mutation. The classification half deserves its own ~10 unit tests covering edge cases (<code>unchanged</code>, both-sides-removed, identical-edit-on-both-sides, blank-line-only differences, ...). Achieving the same coverage through end-to-end fixtures is 5x slower and 10x more brittle.</p>
+<p><strong>Normalization-tolerant comparison.</strong> PGS-03's <code>_normalize</code> strips trailing whitespace per line, collapses blank-line runs, and trims leading/trailing whitespace before equality. Markdown round-trips through TipTap → markdown → file → TipTap commonly add or drop a final newline; without normalization every "unchanged" chapter would classify as "local_changed".</p>
+<h3 id="pattern-11-post-process-collapse-for-rename-detection">Pattern 11: Post-process collapse for rename detection<a class="headerlink" href="#pattern-11-post-process-collapse-for-rename-detection" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> A file moving from <code>slug-a</code> to <code>slug-b</code> with identical body classifies as <code>*_removed</code> for the old slug AND <code>*_added</code> for the new slug — two confusing rows the user has to mentally pair off.</p>
+<p><strong>Solution.</strong> Keep the base classifier simple (it doesn't know about renames). Layer rename detection as a separate pass <code>_collapse_renames(diffs)</code> that pairs <code>(removed, added)</code> rows with matching normalized bodies into a single <code>renamed_*</code> row. PGS-03-FU-01:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_collapse_renames</span><span class="p">(</span><span class="n">diffs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ChapterDiff</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">ChapterDiff</span><span class="p">]:</span>
+    <span class="c1"># group by classification</span>
+    <span class="c1"># for (remote_removed, remote_added) pairs: match bodies, replace with renamed_remote</span>
+    <span class="c1"># for (local_removed, local_added) pairs: match bodies, replace with renamed_local</span>
+    <span class="c1"># leave non-paired rows alone</span>
+</code></pre></div>
+<p><strong>Strict body match only.</strong> Near-misses (e.g. small edits in the body during a rename) stay as independent removed + added rows so the user sees the real diff. Fuzzy thresholds invite false positives that mis-pair distinct chapters.</p>
+<p><strong>Cross-side pairing forbidden.</strong> Never pair <code>remote_removed</code> with <code>local_added</code> even with identical bodies — that's a coincidence, not a rename, and treating it as one would silently merge unrelated work.</p>
+<p><strong>When to use.</strong> Any "rename" detection layered over a per-item classifier. Keep the classifier dumb and the post-process targeted.</p>
+<hr />
+<h2 id="multi-branch-translation-group-patterns-from-pgs-04-pgs-04-fu-01">Multi-branch / translation-group patterns (from PGS-04 + PGS-04-FU-01)<a class="headerlink" href="#multi-branch-translation-group-patterns-from-pgs-04-pgs-04-fu-01" title="Permanent link">&para;</a></h2>
+<p>When your plugin imports multiple variants of the same resource from a single source (e.g. translations of a book on different git branches), failure isolation matters more than success.</p>
+<h3 id="pattern-12-stable-reason-slugs-payload-driven-skip-surface">Pattern 12: Stable reason slugs + payload-driven skip surface<a class="headerlink" href="#pattern-12-stable-reason-slugs-payload-driven-skip-surface" title="Permanent link">&para;</a></h3>
+<p><strong>Problem.</strong> Iterating over N branches and importing each is the easy part. The hard part is what happens to the 2 of 5 branches that fail: the WBT layout is missing, the chapter structure is incompatible, the metadata is invalid. If you <code>try/except</code> and just log, the user sees 3 imported books and silently loses 2.</p>
+<p><strong>Solution.</strong> Capture every per-item failure into a structured <code>SkippedItem</code> payload that lives on the result object next to the successes. PGS-04-FU-01's <code>MultiBranchResult.skipped: list[SkippedBranch]</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SkippedBranch</span><span class="p">:</span>
+    <span class="n">branch</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">reason</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;no_wbt_layout&quot;</span><span class="p">,</span> <span class="s2">&quot;import_failed&quot;</span><span class="p">]</span>
+    <span class="n">detail</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># truncated diagnostic line</span>
+</code></pre></div>
+<p>Two failure modes get distinct slugs:</p>
+<ul>
+<li><code>no_wbt_layout</code> — a structural precondition failed (missing config dir). The branch is in scope but isn't a book.</li>
+<li><code>import_failed</code> — the inner importer raised. Includes the exception class + message, truncated to 500 chars.</li>
+</ul>
+<p>The router echoes <code>skipped[]</code> on the response (defaults to <code>[]</code> for clean imports) and the frontend renders an "Attention required" section per entry.</p>
+<p><strong>Stable English slugs in the API; localized labels in the frontend.</strong> The slug is the API contract — never change it without a migration. The frontend maps slug → user-visible string per language. When you add a new failure mode (a fourth slug down the line), the API gains a new value but old frontends fall through to rendering the raw slug, not crashing.</p>
+<p><strong>Truncate detail server-side.</strong> A 5MB exception payload is a denial-of-service vector and useless to the user. 500 chars is enough for the exception class + the first sentence of <code>str(exc)</code>.</p>
+<p><strong>When to use.</strong> Any iterate-and-import pattern where partial success is the realistic outcome. The pattern transfers to non-import iterations too — bulk export, bulk validation, batch translation.</p>
+<p><strong>Anti-pattern.</strong> Hiding partial failures behind a single <code>result.success: bool</code> flag. The user has no way to recover what was lost.</p>
+<hr />
+<h2 id="reference-pgs-0205-commit-walkthrough">Reference: PGS-02..05 commit walkthrough<a class="headerlink" href="#reference-pgs-0205-commit-walkthrough" title="Permanent link">&para;</a></h2>
+<p>Each phase landed in 1-3 atomic commits. Read in order alongside this guide:</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Concern</th>
+<th>Commits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PGS-02</td>
+<td>Commit-to-repo + push (overwrite MVP)</td>
+<td><code>aa25d74</code> (backend) + <code>782490e</code> (frontend)</td>
+</tr>
+<tr>
+<td>PGS-02-FU-01</td>
+<td>Per-book PAT shared across subsystems</td>
+<td><code>32137bb</code></td>
+</tr>
+<tr>
+<td>PGS-03</td>
+<td>Three-way diff + per-chapter resolution</td>
+<td><code>c87b7dd</code> (backend) + <code>1338d87</code> (frontend)</td>
+</tr>
+<tr>
+<td>PGS-03-FU-01</td>
+<td>mark_conflict + rename detection</td>
+<td><code>819e571</code> + <code>5bfd76a</code> + <code>e58d9e1</code></td>
+</tr>
+<tr>
+<td>PGS-04</td>
+<td>Translation-group multi-branch import</td>
+<td><code>4aa7153</code> + <code>9c8eee5</code></td>
+</tr>
+<tr>
+<td>PGS-04-FU-01</td>
+<td>Skipped-branch surface + reusable panel</td>
+<td><code>06c7c1b</code> + <code>75046b9</code></td>
+</tr>
+<tr>
+<td>PGS-05</td>
+<td>Unified-commit fan-out + per-book lock</td>
+<td><code>6af6f5c</code> + <code>b0133ec</code></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 7, 2026 09:12:29 UTC">May 7, 2026</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 13, 2026 17:55:24 UTC">April 13, 2026</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/astrapi69/bibliogon" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

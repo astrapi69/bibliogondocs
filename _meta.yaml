@@ -1,0 +1,443 @@
+languages:
+  - code: de
+    name: Deutsch
+    default: true
+  - code: en
+    name: English
+
+navigation:
+  - title:
+      de: Erste Schritte
+      en: Getting Started
+    slug: getting-started
+    icon: rocket
+
+  - title:
+      de: Dialoge werden zu Seiten
+      en: Dialogs become pages
+    slug: dialog-to-pages
+    icon: layout
+
+  - title:
+      de: Artikel
+      en: Articles
+    slug: articles
+    icon: file-text
+    children:
+      - title:
+          de: Übersicht
+          en: Overview
+        slug: articles
+      - title:
+          de: Massen-Export
+          en: Bulk export
+        slug: articles/bulk-export
+      - title:
+          de: Medium-Import
+          en: Medium import
+        slug: articles/medium-import
+      - title:
+          de: Als Buch zusammenfassen
+          en: Convert to book
+        slug: articles/convert-to-book
+      - title:
+          de: Textarten
+          en: Content types
+        slug: articles/content-types
+
+  - title:
+      de: Bücher
+      en: Books
+    slug: books/bulk-export
+    icon: book-open
+    children:
+      - title:
+          de: Massen-Export
+          en: Bulk export
+        slug: books/bulk-export
+      - title:
+          de: Git-Repository-URL
+          en: Git repository URL
+        slug: books/repository-url
+      - title:
+          de: Storyboard-Ansicht
+          en: Storyboard view
+        slug: books/storyboard
+      - title:
+          de: Seitenlayouts (Bilderbuch)
+          en: Page layouts (picture-book)
+        slug: books/page-layouts
+      - title:
+          de: Text-Konfiguration (Bilderbuch)
+          en: Text configuration (picture-book)
+        slug: books/text-configuration
+      - title:
+          de: Sprechblasen-Typen (Comic)
+          en: Comic bubble types
+        slug: books/comic-bubbles
+      - title:
+          de: Comic-Panels anordnen
+          en: Arranging comic panels
+        slug: books/comic-panels
+
+  - title:
+      de: Story-Bibel
+      en: Story Bible
+    slug: story-bible
+    icon: library
+    children:
+      - title:
+          de: Übersicht
+          en: Overview
+        slug: story-bible
+      - title:
+          de: Offline
+          en: Offline
+        slug: story-bible/offline
+      - title:
+          de: Erwähnungen und Auto-Erkennung
+          en: Mentions and auto-detect
+        slug: story-bible/mentions
+      - title:
+          de: Arc-Ansicht und Kontinuität
+          en: Arc View and continuity
+        slug: story-bible/arc-view
+      - title:
+          de: Beziehungsgraph
+          en: Relationship graph
+        slug: story-bible/relationship-graph
+
+  - title:
+      de: Dashboard
+      en: Dashboard
+    slug: dashboard/pagination
+    icon: layout-dashboard
+    children:
+      - title:
+          de: Paginierung
+          en: Pagination
+        slug: dashboard/pagination
+      - title:
+          de: Papierkorb und Wiederherstellung
+          en: Trash and restore
+        slug: dashboard/trash-and-restore
+
+  - title:
+      de: Bibliogon als Web-App
+      en: Using Bibliogon as a Web App
+    slug: web-app
+    icon: globe
+
+  - title:
+      de: Offline-Modus und LAN-Zugriff
+      en: Offline mode and LAN access
+    slug: offline-lan
+    icon: wifi-off
+
+  - title:
+      de: Editor
+      en: Editor
+    slug: editor
+    icon: edit
+    children:
+      - title:
+          de: Übersicht
+          en: Overview
+        slug: editor/uebersicht
+      - title:
+          de: Formatierung
+          en: Formatting
+        slug: editor/formatierung
+      - title:
+          de: Anzeige-Einstellungen
+          en: Display settings
+        slug: editor/display-settings
+      - title:
+          de: Zeilenumbruch
+          en: Word wrap
+        slug: editor/word-wrap
+      - title:
+          de: Titel bearbeiten
+          en: Editing the title
+        slug: editor/title-editing
+      - title:
+          de: Schreibziele
+          en: Writing goals
+        slug: editor/writing-goals
+      - title:
+          de: Schreibverlauf
+          en: Writing history
+        slug: editor/writing-history
+      - title:
+          de: Gliederung
+          en: Outliner
+        slug: editor/outliner
+      - title:
+          de: Snapshots und Versionen
+          en: Snapshots and versions
+        slug: editor/snapshots
+      - title:
+          de: Kapitelstatus und Labels
+          en: Chapter status and labels
+        slug: editor/chapter-status-labels
+      - title:
+          de: Schreibmodus
+          en: Composition mode
+        slug: editor/composition-mode
+      - title:
+          de: Kontextmenü
+          en: Context menu
+        slug: editor/context-menu
+      - title:
+          de: Seitenleisten ein- und ausklappen
+          en: Collapsible sidebars
+        slug: editor/sidebars
+
+  - title:
+      de: Export
+      en: Export
+    slug: export
+    icon: download
+    children:
+      - title:
+          de: Im Browser
+          en: In the browser
+        slug: export/browser
+      - title:
+          de: EPUB
+          en: EPUB
+        slug: export/epub
+      - title:
+          de: PDF
+          en: PDF
+        slug: export/pdf
+      - title:
+          de: Audiobook
+          en: Audiobook
+        slug: export/audiobook
+
+  - title:
+      de: Plugins
+      en: Plugins
+    slug: plugins
+    icon: puzzle
+    children:
+      - title:
+          de: Übersicht
+          en: Overview
+        slug: plugins/uebersicht
+      - title:
+          de: Manuskript-Tools
+          en: Manuscript Tools
+        slug: plugins/ms-tools
+
+  - title:
+      de: Vorlagen
+      en: Templates
+    slug: templates
+    icon: bookmark
+
+  - title:
+      de: Import
+      en: Import
+    slug: import
+    icon: upload
+    children:
+      - title:
+          de: Von GitHub
+          en: From GitHub
+        slug: import/github
+      - title:
+          de: Von URL
+          en: From URL
+        slug: import/url
+      - title:
+          de: Git-URL
+          en: Git URL
+        slug: import/git-url
+      - title:
+          de: Feldauswahl
+          en: Field selection
+        slug: import/field-selection
+      - title:
+          de: Git-Historie übernehmen
+          en: Adopt git history
+        slug: import/git-adoption
+      - title:
+          de: Medium-Archiv
+          en: Medium archive
+        slug: import/medium
+      - title:
+          de: Word- und EPUB-Import
+          en: Word and EPUB import
+        slug: import/office
+
+  - title:
+      de: Installation
+      en: Installation
+    icon: download
+    children:
+      - title:
+          de: Übersicht
+          en: Overview
+        slug: installation
+      - title:
+          de: Docker Desktop installieren
+          en: Install Docker Desktop
+        slug: install/docker-desktop
+      - title:
+          de: Plattformübergreifende Installer
+          en: Cross-platform installers
+        slug: install/cross-platform-installers
+      - title:
+          de: Auf dem Handy nutzen
+          en: Use on mobile
+        slug: install/mobile
+      - title:
+          de: Windows-Launcher
+          en: Windows Launcher
+        slug: launcher-windows
+      - title:
+          de: macOS-Launcher
+          en: macOS Launcher
+        slug: launcher-macos
+      - title:
+          de: Linux-Launcher
+          en: Linux Launcher
+        slug: launcher-linux
+      - title:
+          de: Deinstallieren
+          en: Uninstall
+        slug: uninstall
+
+  - title:
+      de: KI-Assistent
+      en: AI Assistant
+    slug: ai
+    icon: sparkles
+    children:
+      - title:
+          de: Übersicht
+          en: Overview
+        slug: ai
+      - title:
+          de: KI-Vorlagen (Artikel + Bücher)
+          en: AI Templates (Articles + Books)
+        slug: ai/ai-templates
+      - title:
+          de: KI offline (eigener API-Schlüssel)
+          en: AI offline (your own API key)
+        slug: ai/offline
+
+  - title:
+      de: Themes
+      en: Themes
+    slug: themes
+    icon: palette
+
+  - title:
+      de: Tastenkürzel
+      en: Keyboard Shortcuts
+    slug: shortcuts
+    icon: keyboard
+
+  - title:
+      de: Git-Sicherung
+      en: Git Backup
+    slug: git-backup
+    icon: git-branch
+    children:
+      - title:
+          de: Grundlagen
+          en: Basics
+        slug: git-backup/basics
+      - title:
+          de: Remote
+          en: Remote
+        slug: git-backup/remote
+      - title:
+          de: SSH-Schlüssel
+          en: SSH Keys
+        slug: git-backup/ssh
+
+  - title:
+      de: Unterstützen
+      en: Support
+    slug: support
+    icon: heart
+
+  - title:
+      de: FAQ
+      en: FAQ
+    slug: faq
+    icon: help-circle
+
+  - title:
+      de: Glossar
+      en: Glossary
+    slug: glossary
+    icon: book-open
+
+  - title:
+      de: Fehlerbehebung
+      en: Troubleshooting
+    slug: troubleshooting
+    icon: alert-triangle
+
+  - title:
+      de: Einstellungen
+      en: Settings
+    slug: settings/sidebar
+    icon: settings
+    children:
+      - title:
+          de: Navigation
+          en: Navigation
+        slug: settings/sidebar
+      - title:
+          de: Backups verwalten
+          en: Manage backups
+        slug: settings/backups
+      - title:
+          de: Fehlerberichte
+          en: Error reports
+        slug: settings/error-report
+      - title:
+          de: Gefahrenzone
+          en: Danger Zone
+        slug: settings/danger-zone
+      - title:
+          de: Standardwerte
+          en: Defaults
+        slug: settings/defaults
+
+  - title:
+      de: Entwickler
+      en: Developers
+    slug: developers/architecture
+    icon: code
+    children:
+      - title:
+          de: Architektur-Übersicht
+          en: Architecture overview
+        slug: developers/architecture
+      - title:
+          de: Plugin-Entwicklung
+          en: Plugin Development
+        slug: developers/plugins
+      - title:
+          de: Mitwirken
+          en: Contributing
+        slug: developers/contributing
+      - title:
+          de: Deployment
+          en: Deployment
+        slug: developers/deployment
+      - title:
+          de: API-Referenz
+          en: API reference
+        slug: developers/api-reference
+      - title:
+          de: Entwickler-Fehlerbehebung
+          en: Developer Troubleshooting
+        slug: developers/troubleshooting
